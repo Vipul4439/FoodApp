@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food App</title>
+
+    <style>
+
+        *{
+            margin-top: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+      #container {
+        width: 93.9%;
+        height: 50px;
+        
+        border: 1px solid black;
+        
+        padding: 3%;
+          background-image: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-restaurant-food-menu-background-image_190820.jpg);
+      }
+      #query {
+        padding-left: 1%;
+        margin-left: 15%;
+        width: 20%;
+        height: 30px;
+        margin-top: 1%;
+      }
+
+      .options {
+        display: block;
+        float: right;
+        margin-right: 400px;
+        padding: 1%;
+      }
+
+      .options h3 {
+        display: inline-block;
+        margin-right: 50px;
+        position: relative;
+        margin-bottom: 100px;
+      }
+
+       #text1 {
+        font-size: 22px;
+        color: black;
+        font-weight: bold;
+      }
+
+      #text2 {
+        font-size: 22px;
+        color: black;
+        font-weight: bold;
+      }
+
+      #data {
+        display: grid;
+        grid-template-columns: repeat(2, 45%);
+        grid-gap: 5%;
+        justify-content: center;
+        padding: 5%;
+      }
+
+      img {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="container">
+      <input placeholder="Search Dish" oninput="throttleFunction()" type="text" id="query" />
+
+      <div class="options">
+        <h3><a id="text1" href="receipeoftheday.html">Receipe Of The Day</a></h3>
+        <h3 id="hello"><a id="text2" href="LatestReceipe.html">Latest Receipe</a></h3>
+      </div>
+    </div>
+    <div id="data"></data> 
+  </body>
+</html>
+
+<script >
+ 
+
+  let data_div = document.getElementById("data");
+
+  var timerId;
+
+  async function searchMovies() {
+    let query = document.getElementById("query").value;
+
+    let res = await fetch(
+      ` https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+    );
+    let data = await res.json();
+    console.log(data)
+
+    return data.meals;
+  }
+
+  function throttleFunction() {
+    if (timerId) {
+      return false;
+    }
+
+    timerId = setTimeout(() => {
+      console.log(timerId);
+      main();
+      timerId = undefined;
+    }, 500);
+  }
+
+  function appendMovies(d) {
+    data_div.innerHTML = null;
+    d.forEach(({ strMealThumb, strMeal }) => {
+      let div = document.createElement("div");
+      div.setAttribute("id", "divid");
+
+      let p = document.createElement("p");
+      p.innerText = strMeal;
+
+      let img = document.createElement("img");
+
+      img.src = strMealThumb;
+
+      div.append(p, img);
+
+      data_div.append(div);
+    });
+  }
+
+  async function main() {
+    let movies = await searchMovies();
+    appendMovies(movies);
+  }
+</script>
