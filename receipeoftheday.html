@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latest Receipe</title>
+
+    <style>
+      * {
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      #container {
+        width: 100%;
+        height: 50px;
+        border: 1px solid black;
+        padding: 3%;
+        background-image: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-restaurant-food-menu-background-image_190820.jpg);
+      }
+      #query {
+        padding-left: 1%;
+        margin-left: 15%;
+        width: 20%;
+        height: 30px;
+        margin-top: 1%;
+      }
+
+      .options {
+        display: flex;
+        float: right;
+        margin-right: 400px;
+        padding: 1%;
+      }
+
+      #text1 {
+        font-size: 22px;
+        color: black;
+        font-weight: bold;
+      }
+
+      #text2 {
+        font-size: 22px;
+        color: black;
+        font-weight: bold;
+      }
+
+      .options h3 {
+        display: flex;
+        margin-right: 50px;
+        position: relative;
+        margin-bottom: 10px;
+        padding: auto;
+      }
+
+      #data {
+        display: grid;
+        grid-gap: 2%;
+        justify-content: center;
+        padding: 5%;
+      }
+
+      #main_div {
+        width: 400px;
+        height: auto;
+        border: 2px solid black;
+        background-color: #ffff;
+
+        opacity: 2;
+        justify-content: center;
+        padding: 6%;
+      }
+
+      img {
+        width: 70%;
+        text-align: center;
+        margin-left: 50px;
+      }
+
+      #titlename {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: black;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body style="background-color: lightgrey"></body>
+</html>
+
+<script type="module">
+  import myNavbar from "./components/navbarr.js";
+  import { getData, appendDataextra } from "./Script/showdata.js";
+
+  document.body.innerHTML = myNavbar();
+
+  let response = getData("https://www.themealdb.com/api/json/v1/1/random.php");
+
+  response.then((data) => {
+    let parent = document.getElementById("data");
+
+    appendDataextra(data, parent);
+  });
+</script>
